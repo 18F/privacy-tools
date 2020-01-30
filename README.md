@@ -10,9 +10,17 @@ DevOps for Privacy Offices phase three aims to bring privacy compliance document
 
 ### What we believe this model can achieve
 
-- **item-one:**
+- **New Search Capabilities:**
 
-- **item-two:**
+- **Speed up Compliance:**
+
+- **More Context for risk assessment:**
+
+- **Reduce scope of breaches:**
+
+- **Speed up Compliance:**
+
+- **Increase accuracy:**
 
 ### What we've done so far
 
