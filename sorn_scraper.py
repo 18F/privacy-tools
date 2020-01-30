@@ -23,6 +23,8 @@ class Sorn:
   def __init__(self, html_url):
     self.html_url = html_url
     self.xml_url = self.build_xml_url()
+    #self.pii = str
+
     
   def build_xml_url(self):
     '''
@@ -37,6 +39,16 @@ class Sorn:
     second_half = "/".join(split_url[4:8])
     return first_half + "/full_text/xml/" + second_half + ".xml"
 
+  def fetch_pii(self):
+    '''
+    Just testing for now
+    ISO-8859-1
+    ''' 
+    result = requests.get(self.xml_url)
+    converted_result = result.text.encode('utf8')
+    print(converted_result)
+    # soup = BeautifulSoup(converted_result, 'lxml')
+    # print(soup)
 
   # def validate_all_xml_urls(self):
   #   for xml_url in self.sorns_xml_urls:
@@ -48,5 +60,7 @@ class Sorn:
 if __name__ == '__main__':
   agency_sorns = AgencySorns(sys.argv[1])
   agency_sorns.get_sorns()
-  for sorn in agency_sorns.sorns:
-    print(sorn.xml_url)
+  # for sorn in agency_sorns.sorns:
+  # print(sorn.xml_url)
+
+  agency_sorns.sorns[0].fetch_pii()
