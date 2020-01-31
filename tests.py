@@ -1,5 +1,5 @@
 import unittest
-from sorn_scraper import AgencySorns, Sorn
+from sorn_scraper import Agency, Sorn
 from unittest.mock import patch
 
 class TestClasses(unittest.TestCase):
@@ -24,12 +24,12 @@ class TestClasses(unittest.TestCase):
     with patch('requests.get') as mock_get:
       # return fixture data
       mock_get.return_value.text = mock_html_response
-      agency_sorn = AgencySorns("http://a-fake-url.com")
-      agency_sorn.get_sorns()
+      agency = Agency("http://a-fake-url.com")
+      agency.get_sorns()
       
-    self.assertTrue(len(agency_sorn.sorns) == 2)
-    self.assertEqual(agency_sorn.sorns[0].html_url, first_sorn_url)
-    self.assertEqual(agency_sorn.sorns[1].html_url, second_sorn_url)
+    self.assertTrue(len(agency.sorns) == 2)
+    self.assertEqual(agency.sorns[0].html_url, first_sorn_url)
+    self.assertEqual(agency.sorns[1].html_url, second_sorn_url)
 
 
   def test_build_xml_url(self):

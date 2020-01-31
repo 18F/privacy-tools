@@ -2,7 +2,7 @@ import sys, time
 import requests
 from bs4 import BeautifulSoup
 
-class AgencySorns:
+class Agency:
   def __init__(self, url):
     '''
     Give it a url of a agency's list of SORNs.
@@ -46,7 +46,7 @@ class Sorn:
   #       print("Ruh roh: " + xml_url)
 
 if __name__ == '__main__':
-  agency_sorns = AgencySorns(sys.argv[1])
-  agency_sorns.get_sorns()
-  for sorn in agency_sorns.sorns:
+  agency = Agency(sys.argv[1])
+  agency.get_sorns()
+  for sorn in agency.sorns:
     print(sorn.xml_url)
