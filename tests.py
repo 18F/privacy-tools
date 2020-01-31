@@ -18,6 +18,10 @@ class TestClasses(unittest.TestCase):
         <HD SOURCE="HD2">PURPOSE:</HD>
         <P>To establish a comprehensive beginning-to-end travel services system containing information ...</P>
         <HD SOURCE="HD2">ROUTINE USES OF THE SYSTEM RECORDS:</HD>
+
+        <HD SOURCE="HD2">RETENTION AND DISPOSAL:</HD>
+        <P>Records kept by a Federal agency are maintained ...</P>
+        <HD SOURCE="HD2">SYSTEM MANAGER AND ADDRESS:</HD>
       </PRIACT>
     """
 
@@ -53,6 +57,7 @@ class TestClasses(unittest.TestCase):
     sorn = Sorn(self.SORN_HTML_URL)
     self.assertEqual(sorn.xml_url, expected_xml_url)
 
+
   def test_get_full_xml(self):
     with patch('requests.get') as mock_get:
       mock_get.return_value.text = self.MOCK_XML
@@ -61,6 +66,15 @@ class TestClasses(unittest.TestCase):
       sorn.get_full_xml()
     
     self.assertEqual(sorn.full_xml, self.MOCK_XML)
+
+
+  def test_get_sorn_text_after_a_given_heading(self):
+    sorn = Sorn(self.SORN_HTML_URL)
+    sorn.full_xml = self.MOCK_XML
+
+    sorn.get_sorn_text_after_a_given_heading("SYSTEM NAME:", "title")
+
+    self.assertEqual(sorn.title, "Contracted Travel Services Program.")
 
 
   def test_sorn_get_title(self):
@@ -88,6 +102,14 @@ class TestClasses(unittest.TestCase):
     sorn.get_purpose()
 
     self.assertEqual(sorn.purpose, "To establish a comprehensive beginning-to-end travel services system containing information ...")
+
+  # def test_sorn_get_retention(self):
+  #   sorn = Sorn(self.SORN_HTML_URL)
+  #   sorn.full_xml = self.MOCK_XML
+
+  #   sorn.get_retention()
+
+  #   self.assertEqual(sorn.retention, "Records kept by a Federal agency are maintained ...")
 
 if __name__ == '__main__':
     unittest.main()

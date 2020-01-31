@@ -43,46 +43,43 @@ class Sorn:
     second_half = "/".join(split_url[4:8])
     return first_half + "/full_text/xml/" + second_half + ".xml"
 
-  def get_title(self):
-    soup = BeautifulSoup(self.full_xml, 'xml')
-    html = u""
-    for tag in soup.find('HD', text="SYSTEM NAME:").next_siblings:
-      if tag.name == "HD":
-        break
-      else:
-        html += str(tag)
-    new_soup = BeautifulSoup(html, 'xml')
-    self.title = new_soup.get_text()
-    
-  def get_pii(self):
-    soup = BeautifulSoup(self.full_xml, 'xml')
-    html = u""
-    for tag in soup.find('HD', text="CATEGORIES OF RECORDS IN THE SYSTEM:").next_siblings:
-      if tag.name == "HD":
-        break
-      else:
-        html += str(tag)
+  def get_full_xml(self):
+    self.full_xml = requests.get(self.xml_url).text
 
-    new_soup = BeautifulSoup(html, 'html.parser') # html is working when xml was not
-    self.pii = new_soup.get_text().strip()
+  def get_sorn_text_after_a_given_heading(self, heading, sorn_attribute):
+    '''
+    heading is the text we are searching for in the XML. 
+    We grab all the text after that heading until we hit the next heading.
+    sorn_attribute is where we want to save the scraped text.
+    '''
 
-  def get_purpose(self):
     soup = BeautifulSoup(self.full_xml, 'xml')
     html = u""
+
     try:
-      for tag in soup.find('HD', text="PURPOSE:").next_siblings:
+      for tag in soup.find('HD', text=heading).next_siblings:
         if tag.name == "HD":
           break
         else:
           html += str(tag)
-
-      new_soup = BeautifulSoup(html, 'html.parser') # html is working when xml was not
-      self.purpose = new_soup.get_text().strip()
+      # put the text back into BS to strip out the xml tags
+      new_soup = BeautifulSoup(html, 'html.parser')
+      tagless_content = new_soup.get_text().strip()
+      setattr(self, sorn_attribute, tagless_content)
     except:
-      print("Purpose not found for %s" % self.xml_url)
+      print("%s not found for %s" % sorn_attribute, self.xml_url)
 
 
+  def get_title(self):
+    self.get_sorn_text_after_a_given_heading("SYSTEM NAME:", "title")
 
+
+  def get_pii(self):
+    self.get_sorn_text_after_a_given_heading("CATEGORIES OF RECORDS IN THE SYSTEM:", "pii")
+
+
+  def get_purpose(self):
+    self.get_sorn_text_after_a_given_heading("PURPOSE:", "purpose")
 
 
   # def validate_all_xml_urls(self):
