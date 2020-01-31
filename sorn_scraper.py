@@ -1,19 +1,21 @@
-import sys, time
+# import sys, time
 import requests
 from bs4 import BeautifulSoup
 
+GSA_SORNS_URL = "https://www.gsa.gov/reference/gsa-privacy-program/systems-of-records-privacy-act/system-of-records-notices-sorns-privacy-act"
+
 class Agency:
-  def __init__(self, url):
+  def __init__(self):
     '''
-    Give it a url of a agency's list of SORNs.
+    Agency holds the url to the list of SORNs and the gathered SORNs.
     '''
-    self.url = url
+    self.url = GSA_SORNS_URL
     self.sorns = []
 
   def get_sorns(self):
     result = requests.get(self.url)
     soup = BeautifulSoup(result.text, 'html.parser')
-    for link in soup.find_all('a'): # It helps to find all anchor tag's
+    for link in soup.find_all('a'): # Find all anchor tag's
         if "https://www.federalregister.gov" in link.get('href'):
           sorn = Sorn(link.get('href'))
           self.sorns.append(sorn)
@@ -46,7 +48,7 @@ class Sorn:
   #       print("Ruh roh: " + xml_url)
 
 if __name__ == '__main__':
-  agency = Agency(sys.argv[1])
+  agency = Agency()
   agency.get_sorns()
   for sorn in agency.sorns:
     print(sorn.xml_url)

@@ -24,7 +24,7 @@ class TestClasses(unittest.TestCase):
     with patch('requests.get') as mock_get:
       # return fixture data
       mock_get.return_value.text = mock_html_response
-      agency = Agency("http://a-fake-url.com")
+      agency = Agency()
       agency.get_sorns()
       
     self.assertTrue(len(agency.sorns) == 2)
