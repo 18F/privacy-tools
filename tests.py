@@ -4,6 +4,22 @@ from unittest.mock import patch
 
 class TestClasses(unittest.TestCase):
   SORN_HTML_URL = "https://www.federalregister.gov/documents/2009/06/03/E9-12951/privacy-act-of-1974-notice-of-updated-systems-of-records"
+  MOCK_XML = """
+      <PRIACT>
+        <HD SOURCE="HD1">GSA/GOVT-4</HD>
+        <HD SOURCE="HD2">SYSTEM NAME:</HD>
+        <P>Contracted Travel Services Program.</P>
+        <HD SOURCE="HD2">SYSTEM LOCATION:</HD>
+
+        <HD SOURCE="HD2">CATEGORIES OF RECORDS IN THE SYSTEM:</HD>
+        <P>Social Security Number; employee identification number;</P>
+        <HD SOURCE="HD2">AUTHORITIES FOR MAINTENANCE:</HD>
+
+        <HD SOURCE="HD2">PURPOSE:</HD>
+        <P>To establish a comprehensive beginning-to-end travel services system containing information ...</P>
+        <HD SOURCE="HD2">ROUTINE USES OF THE SYSTEM RECORDS:</HD>
+      </PRIACT>
+    """
 
   def test_get_sorns(self):
     # setup fixture data
@@ -25,7 +41,7 @@ class TestClasses(unittest.TestCase):
       # return fixture data
       mock_get.return_value.text = mock_html_response
       agency = Agency()
-      agency.get_sorns()
+      agency.get_sorn_urls()
       
     self.assertTrue(len(agency.sorns) == 2)
     self.assertEqual(agency.sorns[0].html_url, self.SORN_HTML_URL)
@@ -37,56 +53,39 @@ class TestClasses(unittest.TestCase):
     sorn = Sorn(self.SORN_HTML_URL)
     self.assertEqual(sorn.xml_url, expected_xml_url)
 
+  def test_get_full_xml(self):
+    with patch('requests.get') as mock_get:
+      mock_get.return_value.text = self.MOCK_XML
+      
+      sorn = Sorn(self.SORN_HTML_URL)
+      sorn.get_full_xml()
+    
+    self.assertEqual(sorn.full_xml, self.MOCK_XML)
+
 
   def test_sorn_get_title(self):
-    mock_xml = """
-      <PRIACT>
-        <HD SOURCE="HD1">GSA/GOVT-4</HD>
-        <HD SOURCE="HD2">SYSTEM NAME:</HD>
-        <P>Contracted Travel Services Program.</P>
-        <HD SOURCE="HD2">SYSTEM LOCATION:</HD>
-      </PRIACT>
-    """
-    with patch('requests.get') as mock_get:
-      mock_get.return_value.text = mock_xml
+    sorn = Sorn(self.SORN_HTML_URL)
+    sorn.full_xml = self.MOCK_XML
 
-      sorn = Sorn(self.SORN_HTML_URL)
-      sorn.get_title()
+    sorn.get_title()
 
     self.assertEqual(sorn.title, "Contracted Travel Services Program.")
 
 
   def test_sorn_get_pii(self):
-    mock_xml = """
-      <PRIACT>
-        <HD SOURCE="HD2">CATEGORIES OF RECORDS IN THE SYSTEM:</HD>
-        <P>Social Security Number; employee identification number;</P>
-        <HD SOURCE="HD2">AUTHORITIES FOR MAINTENANCE:</HD>
-      </PRIACT>
-    """
-    with patch('requests.get') as mock_get:
-      mock_get.return_value.text = mock_xml
+    sorn = Sorn(self.SORN_HTML_URL)
+    sorn.full_xml = self.MOCK_XML
 
-      sorn = Sorn(self.SORN_HTML_URL)
-      sorn.get_pii()
-      
+    sorn.get_pii()
 
     self.assertEqual(sorn.pii, "Social Security Number; employee identification number;")
 
 
   def test_sorn_get_purpose(self):
-    mock_xml = """
-      <PRIACT>
-        <HD SOURCE="HD2">PURPOSE:</HD>
-        <P>To establish a comprehensive beginning-to-end travel services system containing information ...</P>
-        <HD SOURCE="HD2">ROUTINE USES OF THE SYSTEM RECORDS:</HD>
-      </PRIACT>
-    """
-    with patch('requests.get') as mock_get:
-      mock_get.return_value.text = mock_xml
+    sorn = Sorn(self.SORN_HTML_URL)
+    sorn.full_xml = self.MOCK_XML
 
-      sorn = Sorn(self.SORN_HTML_URL)
-      sorn.get_purpose()
+    sorn.get_purpose()
 
     self.assertEqual(sorn.purpose, "To establish a comprehensive beginning-to-end travel services system containing information ...")
 

@@ -12,7 +12,7 @@ class Agency:
     self.url = GSA_SORNS_URL
     self.sorns = []
 
-  def get_sorns(self):
+  def get_sorn_urls(self):
     result = requests.get(self.url)
     soup = BeautifulSoup(result.text, 'html.parser')
     for link in soup.find_all('a'): # Find all anchor tag's
@@ -44,8 +44,7 @@ class Sorn:
     return first_half + "/full_text/xml/" + second_half + ".xml"
 
   def get_title(self):
-    result = requests.get(self.xml_url)
-    soup = BeautifulSoup(result.text, 'xml')
+    soup = BeautifulSoup(self.full_xml, 'xml')
     html = u""
     for tag in soup.find('HD', text="SYSTEM NAME:").next_siblings:
       if tag.name == "HD":
@@ -56,8 +55,7 @@ class Sorn:
     self.title = new_soup.get_text()
     
   def get_pii(self):
-    result = requests.get(self.xml_url)
-    soup = BeautifulSoup(result.text, 'xml')
+    soup = BeautifulSoup(self.full_xml, 'xml')
     html = u""
     for tag in soup.find('HD', text="CATEGORIES OF RECORDS IN THE SYSTEM:").next_siblings:
       if tag.name == "HD":
@@ -69,10 +67,8 @@ class Sorn:
     self.pii = new_soup.get_text().strip()
 
   def get_purpose(self):
-    result = requests.get(self.xml_url)
-    soup = BeautifulSoup(result.text, 'xml')
+    soup = BeautifulSoup(self.full_xml, 'xml')
     html = u""
-    print(self.xml_url)
     try:
       for tag in soup.find('HD', text="PURPOSE:").next_siblings:
         if tag.name == "HD":
@@ -98,8 +94,9 @@ class Sorn:
 
 if __name__ == '__main__':
   agency = Agency()
-  agency.get_sorns()
-  # agency.sorns[0].get_title()
+  agency.get_sorn_urls()
+  agency.sorns[0].get_full_xml()
+  agency.sorns[0].get_title()
   # agency.sorns[0].get_pii()
-  agency.sorns[0].get_purpose()
-  # print(agency.sorns[0].attribues)
+  # agency.sorns[0].get_purpose()
+  print(agency.sorns[0].title)
