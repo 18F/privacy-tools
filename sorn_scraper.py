@@ -25,6 +25,10 @@ class Sorn:
   def __init__(self, html_url):
     self.html_url = html_url
     self.xml_url = self.build_xml_url()
+    self.full_xml = str
+    self.title = str
+    self.pii = str
+    self.purpose = str
     
   def build_xml_url(self):
     '''
@@ -39,6 +43,51 @@ class Sorn:
     second_half = "/".join(split_url[4:8])
     return first_half + "/full_text/xml/" + second_half + ".xml"
 
+  def get_title(self):
+    result = requests.get(self.xml_url)
+    soup = BeautifulSoup(result.text, 'xml')
+    html = u""
+    for tag in soup.find('HD', text="SYSTEM NAME:").next_siblings:
+      if tag.name == "HD":
+        break
+      else:
+        html += str(tag)
+    new_soup = BeautifulSoup(html, 'xml')
+    self.title = new_soup.get_text()
+    
+  def get_pii(self):
+    result = requests.get(self.xml_url)
+    soup = BeautifulSoup(result.text, 'xml')
+    html = u""
+    for tag in soup.find('HD', text="CATEGORIES OF RECORDS IN THE SYSTEM:").next_siblings:
+      if tag.name == "HD":
+        break
+      else:
+        html += str(tag)
+
+    new_soup = BeautifulSoup(html, 'html.parser') # html is working when xml was not
+    self.pii = new_soup.get_text().strip()
+
+  def get_purpose(self):
+    result = requests.get(self.xml_url)
+    soup = BeautifulSoup(result.text, 'xml')
+    html = u""
+    print(self.xml_url)
+    try:
+      for tag in soup.find('HD', text="PURPOSE:").next_siblings:
+        if tag.name == "HD":
+          break
+        else:
+          html += str(tag)
+
+      new_soup = BeautifulSoup(html, 'html.parser') # html is working when xml was not
+      self.purpose = new_soup.get_text().strip()
+    except:
+      print("Purpose not found for %s" % self.xml_url)
+
+
+
+
 
   # def validate_all_xml_urls(self):
   #   for xml_url in self.sorns_xml_urls:
@@ -50,5 +99,7 @@ class Sorn:
 if __name__ == '__main__':
   agency = Agency()
   agency.get_sorns()
-  for sorn in agency.sorns:
-    print(sorn.xml_url)
+  # agency.sorns[0].get_title()
+  # agency.sorns[0].get_pii()
+  agency.sorns[0].get_purpose()
+  # print(agency.sorns[0].attribues)
