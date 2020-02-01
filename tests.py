@@ -1,6 +1,6 @@
 import unittest
+from unittest.mock import patch, mock_open
 from sorn_scraper import Agency, Sorn
-from unittest.mock import patch
 
 class TestClasses(unittest.TestCase):
   SORN_HTML_URL = "https://www.federalregister.gov/documents/2009/06/03/E9-12951/privacy-act-of-1974-notice-of-updated-systems-of-records"
@@ -22,10 +22,14 @@ class TestClasses(unittest.TestCase):
         <HD SOURCE="HD2">RETENTION AND DISPOSAL:</HD>
         <P>Records kept by a Federal agency are maintained ...</P>
         <HD SOURCE="HD2">SYSTEM MANAGER AND ADDRESS:</HD>
+
+        <HD SOURCE="HD1">ROUTINE USES OF RECORDS MAINTAINED IN THE SYSTEM INCLUDING CATEGORIES OF USERS AND THE PURPOSES OF SUCH USES:</HD>
+        <P>a. A record of any case in which ...</P>
+        <HD SOURCE="HD1">POLICIES AND PRACTICES FOR STORING, RETRIEVING, ACCESSING, RETAINING, AND DISPOSING OF RECORDS IN THE SYSTEM:</HD>
       </PRIACT>
     """
 
-  def test_get_sorns(self):
+  def test_get_sorn_urls(self):
     # setup fixture data
     second_sorn_url = "https://www.federalregister.gov/documents/2008/04/25/E8-8883/privacy-act-of-1974-notice-of-updated-systems-of-records"
     # add these test urls into the mock_response
@@ -61,7 +65,8 @@ class TestClasses(unittest.TestCase):
   def test_get_full_xml(self):
     with patch('requests.get') as mock_get:
       mock_get.return_value.text = self.MOCK_XML
-      
+      mock_get.return_value.status_code = 200
+
       sorn = Sorn(self.SORN_HTML_URL)
       sorn.get_full_xml()
     
@@ -72,18 +77,18 @@ class TestClasses(unittest.TestCase):
     sorn = Sorn(self.SORN_HTML_URL)
     sorn.full_xml = self.MOCK_XML
 
-    sorn.get_sorn_text_after_a_given_heading("SYSTEM NAME:", "title")
+    sorn.get_sorn_text_after_a_given_heading("SYSTEM NAME:", "system_name")
 
-    self.assertEqual(sorn.title, "Contracted Travel Services Program.")
+    self.assertEqual(sorn.system_name, "Contracted Travel Services Program.")
 
 
-  def test_sorn_get_title(self):
+  def test_sorn_get_system_name(self):
     sorn = Sorn(self.SORN_HTML_URL)
     sorn.full_xml = self.MOCK_XML
 
-    sorn.get_title()
+    sorn.get_system_name()
 
-    self.assertEqual(sorn.title, "Contracted Travel Services Program.")
+    self.assertEqual(sorn.system_name, "Contracted Travel Services Program.")
 
 
   def test_sorn_get_pii(self):
@@ -103,13 +108,42 @@ class TestClasses(unittest.TestCase):
 
     self.assertEqual(sorn.purpose, "To establish a comprehensive beginning-to-end travel services system containing information ...")
 
-  # def test_sorn_get_retention(self):
-  #   sorn = Sorn(self.SORN_HTML_URL)
-  #   sorn.full_xml = self.MOCK_XML
 
-  #   sorn.get_retention()
+  def test_sorn_get_retention(self):
+    sorn = Sorn(self.SORN_HTML_URL)
+    sorn.full_xml = self.MOCK_XML
 
-  #   self.assertEqual(sorn.retention, "Records kept by a Federal agency are maintained ...")
+    sorn.get_retention()
+
+    self.assertEqual(sorn.retention, "Records kept by a Federal agency are maintained ...")
+
+
+  def test_sorn_get_routine_uses(self):
+    sorn = Sorn(self.SORN_HTML_URL)
+    sorn.full_xml = self.MOCK_XML
+
+    sorn.get_routine_uses()
+
+    self.assertEqual(sorn.routine_uses, "a. A record of any case in which ...")
+
+
+  def test_wite_to_csv(self):
+    sorn = Sorn(self.SORN_HTML_URL)
+    sorn.full_xml = self.MOCK_XML
+    sorn.get_system_name()
+    sorn.get_pii()
+    sorn.get_purpose()
+    sorn.get_retention()
+    sorn.get_routine_uses()
+
+    with patch("builtins.open") as mock_file:
+      with patch('csv.writer') as mock_csv:
+        sorn.write_to_csv()
+
+        mock_file.assert_called_with('gsa_sorns.csv', 'a', newline='')
+        full_csv_row = ['Contracted Travel Services Program.', 'https://www.federalregister.gov/documents/2009/06/03/E9-12951/privacy-act-of-1974-notice-of-updated-systems-of-records', 'Social Security Number; employee identification number;', 'To establish a comprehensive beginning-to-end travel services system containing information ...', 'Records kept by a Federal agency are maintained ...', 'a. A record of any case in which ...']
+        mock_csv.return_value.writerow.assert_called_once_with(full_csv_row)
+
 
 if __name__ == '__main__':
     unittest.main()

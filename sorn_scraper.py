@@ -1,4 +1,4 @@
-# import sys, time
+import time, csv
 import requests
 from bs4 import BeautifulSoup
 
@@ -20,15 +20,29 @@ class Agency:
           sorn = Sorn(link.get('href'))
           self.sorns.append(sorn)
 
+  def get_all_data(self):
+    self.get_sorn_urls()
+    for sorn in self.sorns:
+      time.sleep(0.1)
+      sorn.get_all_data()
+
+  # def write_all_to_csv(self):
+  #   with open("gsa_sorns.csv", "w") as csvfile:
+  #     writer = csv.writer(csvfile)
+  #     writer.writerow(['System Name', 'URL', 'PII', 'Purpose', 'Retention Policy', 'Routine Uses'])
+  #     for sorn in self.sorns:
+  #       writer.writerow([self.system_name, self.html_url, self.pii, self.purpose, self.retention, self.routine_uses])
 
 class Sorn:
   def __init__(self, html_url):
     self.html_url = html_url
     self.xml_url = self.build_xml_url()
-    self.full_xml = str
-    self.title = str
-    self.pii = str
-    self.purpose = str
+    self.full_xml = None
+    self.system_name = None
+    self.pii = None
+    self.purpose = None
+    self.retention = None
+    self.routine_uses = None
     
   def build_xml_url(self):
     '''
@@ -44,7 +58,10 @@ class Sorn:
     return first_half + "/full_text/xml/" + second_half + ".xml"
 
   def get_full_xml(self):
-    self.full_xml = requests.get(self.xml_url).text
+    response = requests.get(self.xml_url)
+    self.full_xml = response.text
+    if response.status_code != 200:
+      print("XML url not working: " + self.xml_url)
 
   def get_sorn_text_after_a_given_heading(self, heading, sorn_attribute):
     '''
@@ -67,33 +84,39 @@ class Sorn:
       tagless_content = new_soup.get_text().strip()
       setattr(self, sorn_attribute, tagless_content)
     except:
-      print("%s not found for %s" % sorn_attribute, self.xml_url)
+      print("%s not found for %s" % (sorn_attribute, self.xml_url))
 
+  def get_all_data(self):
+    self.get_full_xml()
+    self.get_system_name()
+    self.get_pii()
+    self.get_purpose()
+    self.get_retention()
+    self.get_routine_uses()
+    self.write_to_csv()
 
-  def get_title(self):
-    self.get_sorn_text_after_a_given_heading("SYSTEM NAME:", "title")
-
+  def get_system_name(self):
+    self.get_sorn_text_after_a_given_heading("SYSTEM NAME:", "system_name")
 
   def get_pii(self):
     self.get_sorn_text_after_a_given_heading("CATEGORIES OF RECORDS IN THE SYSTEM:", "pii")
 
-
   def get_purpose(self):
     self.get_sorn_text_after_a_given_heading("PURPOSE:", "purpose")
 
+  def get_retention(self):
+    self.get_sorn_text_after_a_given_heading("RETENTION AND DISPOSAL:", "retention")
 
-  # def validate_all_xml_urls(self):
-  #   for xml_url in self.sorns_xml_urls:
-  #     response = requests.get(xml_url)
-  #     time.sleep(0.1)
-  #     if response.status_code != 200:
-  #       print("Ruh roh: " + xml_url)
+  def get_routine_uses(self):
+    header = "ROUTINE USES OF RECORDS MAINTAINED IN THE SYSTEM INCLUDING CATEGORIES OF USERS AND THE PURPOSES OF SUCH USES:"
+    self.get_sorn_text_after_a_given_heading(header, "routine_uses")
+
+  def write_to_csv(self):
+    with open("gsa_sorns.csv", 'a', newline="") as csvfile:
+      writer = csv.writer(csvfile)
+      writer.writerow([self.system_name, self.html_url, self.pii, self.purpose, self.retention, self.routine_uses])
+
 
 if __name__ == '__main__':
   agency = Agency()
-  agency.get_sorn_urls()
-  agency.sorns[0].get_full_xml()
-  agency.sorns[0].get_title()
-  # agency.sorns[0].get_pii()
-  # agency.sorns[0].get_purpose()
-  print(agency.sorns[0].title)
+  agency.get_all_data()
