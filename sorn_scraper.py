@@ -26,12 +26,12 @@ class Agency:
       time.sleep(0.1)
       sorn.get_all_data()
 
-  # def write_all_to_csv(self):
-  #   with open("gsa_sorns.csv", "w") as csvfile:
-  #     writer = csv.writer(csvfile)
-  #     writer.writerow(['System Name', 'URL', 'PII', 'Purpose', 'Retention Policy', 'Routine Uses'])
-  #     for sorn in self.sorns:
-  #       writer.writerow([self.system_name, self.html_url, self.pii, self.purpose, self.retention, self.routine_uses])
+  def write_all_to_csv(self):
+    with open("gsa_sorns.csv", "w") as csvfile:
+      writer = csv.writer(csvfile)
+      writer.writerow(['System Name', 'URL', 'PII', 'Purpose', 'Retention Policy', 'Routine Uses'])
+      for sorn in self.sorns:
+        writer.writerow([sorn.system_name, sorn.html_url, sorn.pii, sorn.purpose, sorn.retention, sorn.routine_uses])
 
 class Sorn:
   def __init__(self, html_url):
@@ -93,7 +93,7 @@ class Sorn:
     self.get_purpose()
     self.get_retention()
     self.get_routine_uses()
-    self.write_to_csv()
+    # self.write_to_csv()
 
   def get_system_name(self):
     self.get_sorn_text_after_a_given_heading("SYSTEM NAME:", "system_name")
@@ -120,3 +120,4 @@ class Sorn:
 if __name__ == '__main__':
   agency = Agency()
   agency.get_all_data()
+  agency.write_all_to_csv()
