@@ -74,7 +74,11 @@ class Sorn:
     html = u""
 
     try:
-      for tag in soup.find('HD', text=heading).next_siblings:
+      # Many SORNs have an added space after their heading.
+      # We want to match with space or without, so we pass both.
+      # We could also regex here.
+      headings = [heading, heading + " "]
+      for tag in soup.find('HD', text=headings).next_siblings:
         if tag.name == "HD":
           break
         else:

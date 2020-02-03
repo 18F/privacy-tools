@@ -127,7 +127,17 @@ class TestClasses(unittest.TestCase):
     self.assertEqual(sorn.routine_uses, "a. A record of any case in which ...")
 
 
-  def test_wite_to_csv(self):
+  def test_agency_write_all_to_csv(self):
+    agency = Agency()
+
+    with patch("builtins.open") as mock_file:
+      with patch('csv.writer') as mock_csv:
+        agency.write_all_to_csv()
+
+        mock_file.assert_called_with('gsa_sorns.csv', 'w')
+
+
+  def test_sorn_write_to_csv(self):
     sorn = Sorn(self.SORN_HTML_URL)
     sorn.full_xml = self.MOCK_XML
     sorn.get_system_name()
@@ -141,7 +151,14 @@ class TestClasses(unittest.TestCase):
         sorn.write_to_csv()
 
         mock_file.assert_called_with('gsa_sorns.csv', 'a', newline='')
-        full_csv_row = ['Contracted Travel Services Program.', 'https://www.federalregister.gov/documents/2009/06/03/E9-12951/privacy-act-of-1974-notice-of-updated-systems-of-records', 'Social Security Number; employee identification number;', 'To establish a comprehensive beginning-to-end travel services system containing information ...', 'Records kept by a Federal agency are maintained ...', 'a. A record of any case in which ...']
+        full_csv_row = [
+          'Contracted Travel Services Program.',
+          'https://www.federalregister.gov/documents/2009/06/03/E9-12951/privacy-act-of-1974-notice-of-updated-systems-of-records',
+          'Social Security Number; employee identification number;',
+          'To establish a comprehensive beginning-to-end travel services system containing information ...',
+          'Records kept by a Federal agency are maintained ...',
+          'a. A record of any case in which ...'
+          ]
         mock_csv.return_value.writerow.assert_called_once_with(full_csv_row)
 
 
