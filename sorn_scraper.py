@@ -29,9 +29,9 @@ class Agency:
   def write_all_to_csv(self):
     with open("gsa_sorns.csv", "w") as csvfile:
       writer = csv.writer(csvfile)
-      writer.writerow(['System Name', 'URL', 'PII', 'Purpose', 'Retention Policy', 'Routine Uses'])
+      writer.writerow(['System Name', 'URL', 'PII', 'Purpose', 'Retention Policy', 'Routine Uses', 'Document Title'])
       for sorn in self.sorns:
-        writer.writerow([sorn.system_name, sorn.html_url, sorn.pii, sorn.purpose, sorn.retention, sorn.routine_uses])
+        writer.writerow([sorn.system_name, sorn.html_url, sorn.pii, sorn.purpose, sorn.retention, sorn.routine_uses, sorn.doc_title])
 
 class Sorn:
   def __init__(self, html_url):
@@ -43,6 +43,7 @@ class Sorn:
     self.purpose = None
     self.retention = None
     self.routine_uses = None
+    self.doc_title = None
     
   def build_xml_url(self):
     '''
@@ -62,6 +63,20 @@ class Sorn:
     self.full_xml = response.text
     if response.status_code != 200:
       print("XML url not working: " + self.xml_url)
+
+  def get_first_child(self, section, sorn_attribute):
+    '''
+    grabs the first child element of the section provided.
+    TODO: delete all the '/n' new line elements from contents
+    '''
+    soup = BeautifulSoup(self.full_xml, 'xml')
+
+    try:
+      section = soup.find(section)
+      first_child = section.contents[1].get_text()
+      setattr(self, sorn_attribute, first_child)
+    except:
+       print("%s not found for %s" % (sorn_attribute, self.xml_url))
 
   def get_sorn_text_after_a_given_heading(self, heading, sorn_attribute):
     '''
@@ -97,6 +112,7 @@ class Sorn:
     self.get_purpose()
     self.get_retention()
     self.get_routine_uses()
+    self.get_doc_title()
     # self.write_to_csv()
 
   def get_system_name(self):
@@ -115,6 +131,9 @@ class Sorn:
     header = "ROUTINE USES OF RECORDS MAINTAINED IN THE SYSTEM INCLUDING CATEGORIES OF USERS AND THE PURPOSES OF SUCH USES:"
     self.get_sorn_text_after_a_given_heading(header, "routine_uses")
 
+  def get_doc_title(self):
+    self.get_first_child("PRIACT", "doc_title")
+
   def write_to_csv(self):
     with open("gsa_sorns.csv", 'a', newline="") as csvfile:
       writer = csv.writer(csvfile)
@@ -125,3 +144,5 @@ if __name__ == '__main__':
   agency = Agency()
   agency.get_all_data()
   agency.write_all_to_csv()
+  # sorn_sample = Sorn('https://www.federalregister.gov/documents/2011/07/25/2011-18637/privacy-act-of-1974-notice-of-updated-systems-of-records')
+  # sorn_sample.get_all_data()
