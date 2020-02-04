@@ -6,7 +6,7 @@ To get there, we're working with federal privacy offices and structuring data fr
 
 This project is funded by [10x](https://10x.gsa.gov/).
 
-Our phase three work is happening in partnership with [the GSA's Privacy Office](https://www.gsa.gov/reference/gsa-privacy-program)
+Our phase three work is happening in partnership with [the GSA's Privacy Office](https://www.gsa.gov/reference/gsa-privacy-program).
 
 
 <!--- ### We believe this model will lay the foundation for: 
