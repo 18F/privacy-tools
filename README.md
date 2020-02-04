@@ -2,7 +2,7 @@
 
 ### We envision a future in which the public can easily understand how and why personally identifiable information gets collected by government agencies. 
 
-To get there, we're working with federal privacy offices and structuring data from PDFed privacy-related compliance documents. By structuring data, we're equipping privacy offices with the ability to more quickly search through these documents, reducing unnecessary manual practices and laying a foundation for them to collaborate with engineering teams.
+To get there, we're working with federal privacy offices and structuring data from PDFed privacy-related compliance documents. By structuring data, we're equipping privacy offices with the ability to more quickly search through these documents, reducing unnecessary manual practices and laying a foundation for them to more easily collaborate with engineering teams.
 
 This project is funded by [10x](https://10x.gsa.gov/).
 
