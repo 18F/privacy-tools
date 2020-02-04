@@ -8,8 +8,8 @@ This project is funded by [10x](https://10x.gsa.gov/).
 
 Our phase three work is happening in partnership with [the GSA's Privacy Office](https://www.gsa.gov/reference/gsa-privacy-program)
 
-```
-### We believe this model will lay the foundation for:
+
+<!--- ### We believe this model will lay the foundation for: 
 
 - **New Search Capabilities:**
 
@@ -25,10 +25,11 @@ Our phase three work is happening in partnership with [the GSA's Privacy Office]
 
 ### What we've done so far
 
-## Partner with us
+## Partner with us --->
 
 ## Installation 
 
+```
 virtualenv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
