@@ -37,11 +37,28 @@ If you are a privacy officer or work in a privacy office and are interested in m
 
 --->
 
+## Install
 
-## Installation
+The scraping code is written in Python and runs locally. We recommend creating a virtual environment using virtualenv to install and manage the required Python libraries. Run these commands in the repository directory on your machine to create a local virtual environment, start it, and then install all requirements.
+
 ```
 virtualenv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
+
+## Scraping Data
+
+Running `python sorn_scraper.py` does the following:
+- Fetches the contents of the [page](https://www.gsa.gov/reference/gsa-privacy-program/systems-of-records-privacy-act/system-of-records-notices-sorns-privacy-act) where GSA publishes links and descriptions of System of Records Notices (SORNs)
+- Scrapes the unique SORN identifiers contained in each federalregister.gov url and crafts url for the XML version of the full text document
+- Downloads those XML files and parses them to get the text from specific sections of the document:
+  - System Name
+  - PII
+  - Purpose
+  - Retention Policy
+  - Routine Uses
+  - Document Title
+- Outputs text from these fields into a local .csv file called `gsa_sorns.csv` with one row per system.
+
 
