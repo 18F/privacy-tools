@@ -1,6 +1,7 @@
 import csv
 import nltk
 from textblob import TextBlob
+import spacy
 
 
 # TextBlob approach
@@ -52,4 +53,13 @@ with open('gsa_sorns.csv') as sorn_csv:
       writer.writerow(system_name_and_phrases)
 
 
+nlp = spacy.load("en_core_web_sm")
+with open('gsa_sorns.csv') as sorn_csv:
+  with open('noun_extracting/spacy_noun_phrases.csv', 'w') as output:
+    reader = csv.DictReader(sorn_csv)
+    writer = csv.writer(output)
+    for row in reader:
+      nlp_text = nlp(row['PII'])
+      noun_phrases =  [chunk.text for chunk in nlp_text.noun_chunks]
+      writer.writerow(noun_phrases)
     
