@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, mock_open
 from sorn_scraper import Agency, Sorn
 
-class TestClasses(unittest.TestCase):
+class SornTests(unittest.TestCase):
   SORN_HTML_URL = "https://www.federalregister.gov/documents/2009/06/03/E9-12951/privacy-act-of-1974-notice-of-updated-systems-of-records"
   MOCK_XML = """
       <PRIACT>
