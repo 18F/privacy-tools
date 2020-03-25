@@ -3,3 +3,4 @@
 .vscode
 gsa_sorns.csv
 __pycache__
+pias/*

@@ -31,4 +31,643 @@ August 2017
 
 Version 08/18/2017 
 
+ 
+
+Abstract  
+
+Overview  
+
+The GSA Ancillary Financial Application (AFA) system is operated by the Office of Corporate 
+IT Services, FM & HR IT Services Division.  The system boundary includes the ancillary 
+systems that support the financial functions of Pegasys, Legacy National Electronic and 
+Accounting Reporting (NEAR) historical data and Financial Management Information System 
+(FMIS), all of which are owned and managed by USDA.  These ancillary applications assist in 
+GSA’s mission by allowing the Office of the Chief Financial Office users to review, validate, 
+and reconcile transactions in a variety of financial domains such as vendor invoices and accounts 
+payables.  
+
+The GSA Ancillary Financial Application (AFA) system is operated by the Office of Corporate 
+IT Services, FM & HR IT Services Division to support the financial management process which 
+primarily occurs in the United States Department of Agriculture (USDA) system known as 
+Pegasys.  GSA’s Associate Chief Information Officer of the Office of Corporate IT Services is 
+the Authorizing Official of AFA and all the minor applications that fall under this system. The 
+applications facilitate the financial management processes to improve efficiency and accuracy of 
+the transactions in Pegasys, but none of the applications within AFA are the authoritative 
+financial records.  
+
+The following are the applications within AFA that contain data subject to the Privacy Act 
+(Personally Identifiable Information – PII).  The summary of each application describes the PII 
+data that is collected and the method(s) of collection.  
+
+●  Concessions Accounts Receivable System (CARS) - This application provides read-
+
+only access to historical records and no changes are made to the data. In the past CARS, 
+provided accounts receivable tracking, report generation, and management information 
+for concession leases. CARS handles accounting for concession related income (e.g., a 
+cafeteria within a government public building). The amount recorded in CARS is the 
+amount of the check paid by the concession holding company. Personal data may be 
+collected in CARS if a concession is run by an individual as opposed to a company.  The 
+system collects the name and address of the concession payer.  
+
+●  Check Cancellation – Check Cancellation is a read-only application and provides 
+historical data. The Check Cancellations application was previously used by GSA 
+personnel in the Kansas City Finance Center to import check cancellation files from 
+Treasury and provide data for associates to make appropriate accounting entries.  This 
+data was also used in the cash reconciliation process performed by the Pegasys Finance 
+Branch. The data is viewed in Check Cancellation application and compared to Pegasys 
+Cash transactions.  Additionally, the application exports a daily Excel file which is 
+manually sent to a mailing list of individuals who require this data to perform their job 
+functions (e.g., GSA accountants). If GSA receives checks from individuals (sole 
+proprietors using their name and personal banking information) then the name and bank 
+account information would be personal data. Most of the transactions however are related 
+to companies and include only company data.  
+
+Version 08/18/2017 
+
+ 
+
+●  Federal Supply Service Payment System (FEDPAY) - The Federal Supply Service 
+
+Payment System (FEDPAY) provides an automated method for electronically receiving 
+and processing Federal Supply Service purchase orders as well as the subsequent 
+processing of vendor-submitted invoices against those purchase orders. For each invoice 
+processed for payment the FEDPAY system creates a billing record that is passed to the 
+Federal Acquisition Service Pegasys Connect for generating billing records to customers. 
+The FEDPAY system receives all purchase orders electronically from interfacing 
+systems. Vendors may submit invoices to FEDPAY via the Internet, Electronic Data 
+Interchange (EDI), or through the mail. The FEDPAY system consists of user-friendly 
+online menu items, update forms, query forms and reports to input, process, and retrieve 
+transactions easily and quickly such as purchase orders, invoices, claims, receipts, and 
+vendor information. Like other AFA applications, the only personal data collected in 
+FEDPAY occurs when a vendor provides personal information for example if they are a 
+sole proprietor using their name and address for the company. Most of the transactions 
+however are related to companies and include only company data. 
+
+●  Invoice Search - Invoice Search is an application that searches for invoices in the Visual 
+
+Invoice Tracking and Payment (VITAP) system to track paid and delinquent (over 20 
+days old) invoices. The application allows users to view outstanding and paid invoices in 
+the VITAP and Pegasys systems, view images of invoices, and reject invalid invoices via 
+the web (rejecting an invoice does not delete data, it simply marks it as a rejection. 
+Follow up is then performed to ensure that the invoice is invalid). Users cannot modify 
+data using Invoice Search. It relies on user roles within Pegasys for authentication and the 
+data visible to the user is filtered based on his/her Parent Organization (e.g. GSA).  This 
+application provides a key piece of the agencies’ overall Accounts Payable workflow 
+process.  Invoice images displayed in Invoice Search may contain PII such as addresses, 
+phone numbers, Taxpayer Identification Numbers.  The application also displays bank 
+information which could be an individual’s if they do not separate their personal and 
+business banking information.  Invoice Search does not distinguish personal and business 
+accounts and the same protections are applied to both categories of information. 
+
+●  Outlease Accounts Receivable System (OARS) - This application provides read-only 
+access to historical records and no changes are made to the data. GSA outleases space 
+when a long-term Federal rental need is identified but full utilization of the space is not 
+achievable in the short-term.  OARS creates coupon books and tracks receipt of outlease 
+rents in Federal buildings, handles special charges (e.g., cleaning) for a building, and 
+creates sales accounting entries for each income type when an outlease occurs. OARS 
+provides accounts receivable tracking, report generation, and management information 
+for Public Building Services (PBS) leases to non-federal customers. The application can 
+generate monthly receivables reports, reverse out deferred liabilities in the large 
+beginning of month batches, and track the payments of individual accounts on a month 
+by month basis, report on the inventory of spaces being leased by each region, and 
+produce delinquency report on overdue accounts. In addition, OARS has the ability to 
+track the leasing of Historic Buildings separately. OARS processes and records data that 
+could be used to identify individuals such as billing names, addresses, contract numbers, 
+
+Version 08/18/2017 
+
+ 
+
+and history of payments. 
+
+●  Pegasys Online Disbursement Review (POLDR) - Pegasys Online Disbursement 
+
+Review (POLDR) provides the Financial Operations Division a consolidated view of 
+matched documents including purchase orders, receiving reports, invoices, and payment 
+authorizations in order to expedite the approval or disapproval of payments in Pegasys. 
+POLDR pulls together all four views into four quadrants of a single screen so that the 
+Financial Analyst can review the Payment prior to certification.  Users review invoice, 
+purchase orders, receiving reports, information from payment documents in Pegasys 
+within the four quadrants.  Users review documents to approve or cancel payments. 
+When a payment is approved, the approval is linked to a scanned image from VITAP to 
+copy the actual invoice.  The approval occurs in POLDR and is then sent to Pegasys.  
+VITAP feeds information into POLDR.  If a payment is rejected, it creates an exception 
+in VITAP, so that the issue can be resolved by the Financial Analysts. POLDR displays 
+data from Pegasys to include: Vendor Code/TIN , Vendor Address Code, DUNS 
+Number, Vendor name, Remit to Address, Vendor Account Numbers, Invoice Number, 
+Invoice Amount, Receipt acceptance data. POLDR contains vendor bank account 
+information including account and routing numbers. The use of personal data is minimal 
+but possible. 
+
+●  Utility Payment Profile System (UPPS) - The Utility Payment Profile System was 
+
+developed to track and pay GSA utility bills and create projections of future utility 
+payments. UPPS produces a file of utility payment information for the PBS-IS EUAS 
+system and provides a report that identifies utility bill payments that are out of tolerance 
+with PBS building energy usage profiles. The application is used to process utility 
+payments, setting up utility accounts, and paying invoices. UPPS is also used for setting 
+up monthly profiles (monthly accruals). This application supports PBS and all utilities 
+except telephone bills. UPPS technicians have scanners that scan the physical copies of 
+bills from electric, water, and gas companies. These bills are usually received by mail for 
+all GSA owned property. When invoice is received, payment is entered in UPPS to post. 
+Then scanned in batches, and then sent to Pegasys, through a VITAP output process. 
+Pegasys feeds vendor information into UPPS. The data also contains invoice numbers and 
+customer name. There is currently a plan to migrate the UPPS application to another 3rd 
+party system. 
+
+●  Utilities System - The Utility System was developed to track and pay GSA utility bills 
+and generate projections of utility payments. It is a .Net Web application that provides 
+access to the information in the UPPS tables. Utilities System allows users to query the 
+UPPS tables in a read only mode.  The application allows users to reconcile payments 
+that are out of tolerance with PBS building energy usage profiles and random sample 
+reports.  Additionally the app is used for approximately one month a year to do updates to 
+Payment Profiles used by UPPS for the following fiscal year.  These do not affect 
+payments; the profiles are used for projecting accruals and out of tolerance variances. 
+This system is a read-only reporting system and does not collect data.  It reports on data 
+in the UPPS system. It displays master data that includes vendor identifiers and billing 
+
+Version 08/18/2017 
+
+ 
+
+ 
+
+records. 
+
+●  Visual Invoice Tracking and Payment (VITAP) - The Visual Invoice Tracking and 
+
+Payment (VITAP) application is a front end accounts payable matching system that 
+provides a variety of functionality for the Federal Acquisition Service (FAS) and Public 
+Building Service business lines. VITAP provides data for two of the OCFO Web 
+applications: Web Vendors and Invoice Search. It also provides interfaces for UPPS 
+utility payment data to flow into Pegasys.   External customers use Web Vendor to 
+submit invoices via the web.  Invoice hardcopies are scanned and entered into 
+ImageNow.  VITAP provides the interface between the FAS feeder systems (Online 
+Management Information System (OMIS), Regional Business Application (RBA), and 
+Telecommunications Order and Pricing System (TOPS)), document matching, validation, 
+and processing, exception processing, workflow routing, invoice tracking, obligations 
+processing, payment, accruals document management for unprocessed documents, 
+transaction history, and Pegasys. VITAP automatically performs a match on the 
+electronic and scanned documents and generates the appropriate accounting entries to be 
+batched and transmitted to Pegasys. Some of the key functions that VITAP performs are 
+invoice tracking, email notifications, report generation, and management information. 
+VITAP uses the following information from a feed from Pegasys: Vendor Name, Tax 
+Identification Number / Social Security Number, Address, email address.  The vendor 
+name and SSN only comes in as personal data where a vendor is a sole proprietor using 
+their personal information for business purposes.  
+
+●  Web Vendor - The Web Vendor application allows GSA Vendors to search for their 
+
+Purchase Orders (POs), past and pending payments, status of invoices, and to submit new 
+invoices electronically.   Web Vendor can only be used for invoices processed via 
+VITAP.  GSA vendors access the application via the Internet. The vendors can create the 
+electronic invoices only against the POs found in the Pegasys PO table. All the submitted 
+information is saved in the VITAP database.  The process is automated.  Vendors submit 
+the electronic invoice via the website and the details are saved to the VITAP database, 
+and related images are stored on the web server. An automatic back-end process runs and 
+imports these invoice details into the Pegasys Invoice Table in VITAP and moves the 
+related image files to ImageNow. Web Vendor captures the following potentially 
+personal data; Vendor Name, email, phone number, TIN numbers . The vendor name, 
+phone, and email address only comes in as personal data where a vendor is a sole 
+proprietor using their personal information for business purposes.  
+
+Section 1.0 Authorities and Other Requirements  
+ 
+1.1 What specific legal authorities and/or agreements permit and define the collection of 
+information by the application in question?  
+
+48 CFR 1232.7002 Invoice and Voucher review and approval – provides for the collection of 
+invoices for contracts and the review of these by the government for the purpose of receiving 
+
+Version 08/18/2017 
+
+ 
+
+payments from vendors using Federal space and for receiving invoices for payment.  
+
+Vendors who use their SSNs rather than a Tax Identification Number (TIN) introduce personal 
+data into AFA.  AFA is used to manage financial processes that are geared towards Accounts 
+Payable and Accounts Receivable workflows.  
+
+ 
+1.2 What Privacy Act System of Records Notice(s) (SORN(s)) applies to the information?  
+
+The following SORN captures the records discussed in this PIA: 
+https://www.federalregister.gov/documents/2006/10/16/E6-17069/privacy-act-of-1974-notice-of-
+a-new-system-of-records  
+
+ 
+1.3 Has a System Security Plan (SSP) been completed for the information system(s) 
+supporting the application?  
+
+ 
+
+The Ancillary Financial Applications (AFA) FISMA system was approved with an Authority to 
+Operate (ATO) on September 21, 2016 and is in the process of being renewed. The system is a 
+Moderate system and will be approved for three years on or before September 20, 2017. 
+
+1.4 Does a records retention schedule approved by the National Archives and Records 
+Administration (NARA) exist?  
+
+The Pegasys financial records are the system of record, but GSA currently maintains the AFA 
+records indefinitely. At a minimum NARA requires retention for at least 6 years after contracts 
+expire for financial management records. 
+
+ 
+1.5 If the information is covered by the Paperwork Reduction Act (PRA), provide the OMB 
+Control number and the agency number for the collection. If there are multiple forms, 
+include a list in an appendix.  
+
+The information in these systems are not collected from the public and thus are not subject to the 
+Paperwork Reduction Act.   
+
+Section 2.0 Characterization of the Information  
+ 
+
+The following questions are intended to define the scope of the information requested 
+
+and/or collected, as well as reasons for its collection.  
+ 
+2.1 Identify the information the application collects, uses, disseminates, or maintains. 
+  
+
+The applications that collect individual data ancillary to the billing and accounts receivable 
+process and only where individuals are using personal information for business purposes.  The 
+records collected in AFA are related to invoices and accounts receivables.  When companies are 
+sole proprietorships and the owner does not have a separate Tax Identification Number (TIN) 
+
+Version 08/18/2017 
+
+ 
+
+from the Internal Revenue Service that is not their Social Security Number (SSN), the records 
+may contain multiple possible personal information to include: person’s name, SSN, home 
+address (if they do not have a separate business address), home phone, and e-mail address.  The 
+number of records containing PII is a small percentage of the overall record set and Pegasys has 
+a process from replacing an SSN entered by a vendors with an "S" vendor code.  
+
+Analysis is performed by the user and not the application.  The data analyzed is related to 
+reconciliation of the information displayed in these applications versus data in the Accounts 
+Payable or Accounts Receivable modules within USDA’s Pegasys system.  
+
+Applications receive data from Pegasys as the official system of record for financial transactions. 
+Data such as the vendor information can be retrieved from Pegasys. Therefore, the ways in 
+which Pegasys handles the TIN or SSN determines which data is passed on to these applications 
+as noted in Section 1 of this document.  These applications can also flow data to Pegasys, for 
+example, in the case of Web Vendor.  The actual individual / personal information such as the 
+vendor registration information is not passed on to Pegasys.  The vendors must already be in the 
+Pegasys system and that system is the authoritative source of the vendor information.  
+
+ 
+2.2 What are the sources of the information and how is the information collected for the 
+application?  
+ 
+
+The AFA applications receive vendor data from Pegasys. Web Vendor users with administrative 
+rights for their company can register other users from the company. The information captured for 
+those users is their name and e-mail address.  
+
+2.3 Does the application use information from commercial sources or publicly available 
+data? If so, explain why and how this information is used.  
+
+No the applications do not use data from commercial / public sources.  
+
+ 
+2.4 Discuss how accuracy of the data is ensured.  
+ 
+
+The primary purpose of these applications is to allow end users to cross-reference data across 
+financial applications and data. The accuracy is confirmed by these end  users,  not through 
+automated means.  The Pegasys system at USDA remains the authoritative source for financial 
+transactions and these applications assist in the financial workflow.   
+
+ 
+2.5 Privacy Impact Analysis: Related to Characterization of the Information  
+ 
+
+Privacy Risk: If role-based access is no applied or enforced properly, personal data could be 
+exposed to individuals who do not have a need to know.    
+
+Mitigation: The AFA applications are in a Moderate FISMA boundary with role-based access 
+
+Version 08/18/2017 
+
+ 
+
+that is reviewed by system owners. An interconnection agreement is in place with USDA for the 
+Pegasys system to share vendor information with AFA.  This ensures a secure connection with 
+only the data required being shared between the two systems.   
+
+ 
+
+ 
+
+Section 3.0 Uses of the Information  
+ 
+The following questions require a clear description of the application’s use of information.  
+ 
+3.1 Describe how and why the application uses the information.  
+
+The AFA applications use the vendor information to connect the company with the purchases 
+and/or the invoices in the financial system.   Vendor POC information is used to communicate 
+with vendors (phone and e-mail) and the TIN is used as an identifier in the Pegasys financial 
+system for reporting data to the IRS.  The TIN is shown in these applications in order to 
+authoritatively match with records in Pegasys since vendor names can have overlaps. 
+
+ 
+3.2 Does the application use technology to conduct electronic searches, queries, or analyses 
+in an electronic database to discover or locate a predictive pattern or an anomaly? If so, 
+state how GSA plans to use such results. 
+
+The applications do simple queries on the Vendor Code (usually a TIN) and names, but not 
+detailed analysis or calculations. The applications do not perform complex analysis but users will 
+match data and store new information. For example, Web Vendor allows users to submit an 
+invoice against a matching purchase order.  Another example is VITAP’s ability to generate 
+accounting entries based on submitted documents.   
+
+3.3 Are there other components with assigned roles and responsibilities within the system?  
+ 
+
+AFA shares data with Pegasys through the VITAP interfaces with Pegasys.  FEDPAY also 
+interfaces to Pegasys through the Secure Transfer Service. There is a signed Interconnection 
+Security Agreement and Memorandum of Understanding between GSA and USDA for the data 
+exchanges that occur.  In particular the AFA applications obtain the vendor information (which 
+can contain personal information) from Pegasys.  
+
+3.4 Privacy Impact Analysis: Related to the Uses of Information  
+
+Privacy Risk: If users are not familiar with the way in which Pegasys marks vendors who are 
+using their SSN instead of a TIN, sensitive personal information such as the name and SSN 
+could be exposed.  
+
+Mitigation: Training and documentation in Pegasys covers the use of the vendor code field and 
+the use of the “S” in the code for vendors using their SSN while doing business with the 
+government.  This information is also covered in the user guide information for the applications 
+and all AFA users must complete privacy and security training on an annual basis.  
+
+Version 08/18/2017 
+
+ 
+
+ 
+Section 4.0 Notice  
+ 
+
+The following questions seek information about the application’s notice to the individual 
+about the information collected, the right to consent to uses of said information, and the right to 
+decline to provide information. 
+
+4.1 How does the application provide individuals notice prior to the collection of 
+information? If notice is not provided, explain why not.  
+ 
+
+This PIA will be posted to the GSA  privacy site here - 
+https://www.gsa.gov/portal/content/102237 .  The Pegasys SORN which covers this data will be 
+replaced here - https://www.federalregister.gov/documents/2013/12/31/2013-31308/privacy-act-
+of-1974-notice-of-an-updated-system-of-records with updates to rename it and align with the 
+information in this PIA.  
+
+ 
+4.2 What opportunities are available for individuals to consent to uses, decline to provide 
+information, or opt out of the application?  
+ 
+
+Individuals do not use the applications that are the subject of this PIA. The individuals whose 
+data is captured in AFA consent to use their information when signing contracts with GSA or 
+leasing GSA facilities. The data collected is intended to be vendor data and it is the individual’s 
+choice to use their personal information instead of applying for a company Employer 
+Identification Number from the IRS.  Individuals should consider using a TIN instead of their 
+personal SSN when doing business with the government. The IRS covers this in their guidance to 
+self-employed individuals - https://www.irs.gov/individuals/international-taxpayers/taxpayer-
+identification-numbers-tin and GSA makes this informaiton available to vendors during the 
+process.  
+
+ 
+
+ 
+
+4.3 Privacy Impact Analysis: Related to Notice  
+
+Privacy Risk: Individuals can decrease the potential risk to their privacy by obtaining and using 
+an TIN instead of their SSN when doing business with the government.  The SORN identifies 
+that the vendor code is used for retrieval as well as the vendor’s name.    
+
+Mitigation: User documentation includes information about how the Vendor Code is used and a 
+special code may be applied in Pegasys to notify end users that a vendor has chosen to use their 
+SSN.  Users are aware that this information becomes sensitive in this instance.  In addition, role 
+based access is in place for the applications to prevent access by individuals who are not part of 
+the financial processing workflow. 
+
+ 
+Section 5.0 Data Retention by the application  
+
+Version 08/18/2017 
+
+ 
+
+ 
+
+The following questions are intended to outline how long the application retains the 
+
+information after the initial collection. 
+5.1 Explain how long and for what reason the information is retained.  
+ 
+
+Financial records are retained per National Archives and Records Administration (NARA) 
+standards for at least six years. The AFA records may be retained online longer for historical 
+reviews, but at a minimum will be retained six years. Pegasys is the system or record for the 
+financial data however.  
+
+ 
+5.2 Privacy Impact Analysis: Related to Retention  
+ 
+
+Privacy Risk: Since these applications are sometimes used for historical purposes and review, 
+the data may be retained longer than the six years required.    
+
+Mitigation: Role based access, intrusion detection, firewalls, and other elements of a FISMA 
+Moderate system are in place. These protections help reduce the risk to individuals when their 
+data may need to be retained for longer than the 6 year minimum retention period. 
+
+ 
+
+Section 6.0 Information Sharing  
+ 
+
+The following questions are intended to describe the scope of the application information 
+
+sharing external to the Agency. External sharing encompasses sharing with other federal, state 
+and local government and private sector entities.  
+ 
+6.1 Is information shared outside of GSA as part of the normal agency operations? If so, 
+identify the organization(s) and how the information is accessed and how it is to be used.  
+ 
+
+Data is shared between this system and Pegasys.  It is a two-way interface, but personal data is 
+only shared from Pegasys to AFA.  AFA does not provide updates of the personal data back to 
+Pegasys.  
+
+6.2 Describe how the external sharing noted in 6.1 is compatible with the SORN noted in 
+1.2.  
+ 
+
+The Pegasys SORN for GSA (GSA/PPFM-11) is being updated to indicate that Pegasys has 
+moved to USDA and AFA shares data between the two systems.  
+
+ 
+6.3 Does the application place limitations on re-dissemination?  
+ 
+
+The data provided from AFA to Pegasys is not the personal data and is not shareable.  For 
+
+Version 08/18/2017 
+
+ 
+
+ 
+
+example, AFA (in VITAP) may create accounting lines in Pegasys against purchases in the 
+system.  This information is not shareable and does not contain personal data. 
+
+6.4 Describe how the application maintains a record of any disclosures outside of the 
+Agency.  
+ 
+
+AFA tracks the transmission of data to Pegasys in audit logs that contain information compliant 
+with GSA’s audit log procedures.  
+
+6.5 Privacy Impact Analysis: Related to Information Sharing  
+
+Privacy Risk:  Is there a potential risk of PII being shared to Pegasys without authorization? 
+
+Mitigation: No. The only data from AFA that is shared with Pegasys is related to financial 
+transactions.  Pegasys contains the relevant vendor information.  
+
+ 
+Section 7.0 Redress  
+ 
+
+The following questions seek information about processes in place for individuals to seek 
+
+redress which may include access to records about themselves, ensuring the accuracy of the 
+information collected about them, and/or filing complaints.  
+ 
+7.1 What are the procedures that allow individuals to access their information?  
+ 
+
+Individuals should contact the AFA Information Owner with questions regarding any of their 
+personal data in the system.  
+
+7.2 What procedures are in place to allow the subject individual to correct inaccurate or 
+erroneous information?  
+ 
+
+Discrepancies in data must be corrected in Pegasys and then the corrected data will be migrated 
+back to AFA.   
+
+ 
+7.3 How does the application notify individuals about the procedures for correcting their 
+information?  
+ 
+
+Vendors are made aware of accounts payable and accounts receivable processes through their 
+contracts.  For disputes or corrections, they would contact their Contracting Officer / Specialist 
+and follow the procedures in the orders they receive. 
+
+ 
+7.4 Privacy Impact Analysis: Related to Redress  
+
+Version 08/18/2017 
+
+ 
+
+ 
+
+Privacy Risk: If users in Pegasys enter the vendor data incorrectly, that data will be incorrect in 
+AFA as well.  The AFA applications are used primarily for tracking and matching data.  The 
+process is not visible to the individuals except through contracts that use Web Vendor for 
+invoicing.  
+
+Mitigation: The contracting / ordering process and associated documentation is the individual’s 
+window into the financial records and processing.  Each vendor should check the accuracy of the 
+purchase order documentation as it relates to any personal information.  For information on 
+gaining access and working with Web Vendor, refer to the Frequently Asked Questions. 
+
+ 
+Section 8.0 Auditing and Accountability  
+ 
+
+The following questions are intended to describe technical and policy based safeguards 
+
+and security measures. 
+ 
+8.1 How does the application ensure that the information is used in accordance with stated 
+practices in this PIA?  
+ 
+
+Audit reviews are performed at the operating system level to identify any anomalies of server-
+level activities. The application logs may be reviewed if an incident occurs.  
+
+OARS, CARS, and Check Cancellation are read-only applications and therefore do not have 
+auditing enabled. 
+
+FEDPAY, Web Vendor, VITAP, UPPS, Utilities, and POLDR all audit data change events and 
+logins to the system as specified in the System Security Plan for AFA. Audit log reviews are 
+performed when suspicious activity is detected or a security incident has been reported. 
+
+8.2 Describe what privacy training is provided to users either generally or specifically 
+relevant to the application.  
+ 
+
+All Federal Government employees and contractors receive annual general security awareness 
+and privacy training.  This is relevant to how AFA records are handled and users are trained to 
+understand the importance of protecting the records and documents stored in the system. 
+
+ 
+8.3 What procedures are in place to determine which users may access the information and 
+how does the application determines who has access?  
+ 
+
+Users for all of the applications listed in this PIA, except for FEDPAY for vendors and Invoice 
+Search, request access to the system using GSA’s Enterprise Access Request System (EARS).  
+EARS forces the user to specify the roles they are requesting.  Each request from a potential end 
+user is reviewed by an approval workflow which complies with the GSA IT Procedural Guide 
+
+Version 08/18/2017 
+
+ 
+
+ 
+ 
+
+for access control. The minimum workflow requires approval of the applicant’s supervisor prior 
+to a system administrator adding the user into the role requested.   
+
+Invoice Search users are controlled through the USDA Pegasys account management process and 
+roles are assigned in the Pegasys system by the USDA administrators. 
+
+FEDPAY for non-Government users are not approved through EARS but are approved by the 
+vendor points of contact, i.e. the person appointed by each vendor to approve such requests.  
+
+The roles define whether the user has read-only or write privileges.  The read/write privileges 
+may change for different drawers in the system. 
+
+8.4 How does the application review and approve information sharing agreements, MOUs, 
+new uses of the information, new access to the system by organizations within GSA and 
+outside?  
+ 
+
+All MOUs are reviewed by the system owner, program manager, Information System Security 
+Officer, Information Owner, and counsel and then sent to A&A Review Team for formal review.  
+
+ 
+
+Version 08/18/2017 
+
+ 
+
+ 
+
+Version 08/18/2017 
+
 
