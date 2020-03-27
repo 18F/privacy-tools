@@ -36,9 +36,9 @@ class Agency:
   def write_all_to_csv(self):
     with open("gsa_pias.csv", "w") as f:
       writer = csv.writer(f)
-      writer.writerow(['System Name', 'Authority'])
+      writer.writerow(['System Name', 'Authority', 'URL'])
       for pia in self.pias:
-        writer.writerow([pia.system_name, pia.authority])
+        writer.writerow([pia.system_name, pia.authority, pia.pdf_url])
 
 class PIA:
   def __init__(self, pdf_url=None, pdf_path=None, txt_path=None):
@@ -50,6 +50,7 @@ class PIA:
     self.authority = None
 
   def download_pdf(self):
+    print(pia.pdf_url)
     filename = urlparse(self.pdf_url).path
     filename = filename.split("/")[2] # drop the cdnstatic
     self.pdf_path = 'pias/' + filename
@@ -81,12 +82,11 @@ class PIA:
 
   def get_authority(self):
     pattern_just_cfr = "(\d+\s+(CFR|U\.S\.C\.|U\.S\. Code § |USC § )\s*\d+\.*\d+)"
-    pattern_full_authority = "1\.2.+?\?+?(.+)?1\.3"
+    pattern_full_authority = "\d\.\d.+authority.*?\?(.+?)\d\.\d\s+"
     match = re.search(pattern_just_cfr, self.full_text, flags=re.DOTALL)
-    try:
-      self.authority = match.group(1).replace("\n","")
-    except:
-      pass
+    if match:
+      self.authority = ", ".join(match.groups()).replace("\n","")
+
 
     # if not self.authority:
     #   match = re.search(pattern_full_authority, self.full_text, flags=re.DOTALL)
@@ -97,11 +97,18 @@ class PIA:
 
 
 if __name__ == '__main__':
+  # pia = PIA(txt_path="pias/Government%20Retirement%20Benefits_PIA_August2019.txt")
+  # pia.get_text_from_txt()
+  # pia.get_authority()
+  # print(pia.authority)
+  # pdb.set_trace()
   agency = Agency()
   agency.load_local_pias_from_txt()
   for pia in agency.pias:
+    # pia.pdf_url = "https://www.gsa.gov/cdnstatic/" + pia.txt_path.replace("pias/","").replace("txt","pdf")
     pia.get_text_from_txt()
-    pia.get_system_name()
+    # pia.get_system_name()
     pia.get_authority()
-  agency.write_all_to_csv()
-    
+    print(pia.authority)
+    print(pia.txt_path)
+  # # agency.write_all_to_csv()
