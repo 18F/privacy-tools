@@ -61,6 +61,7 @@ class Sorn:
 
   def get_full_xml(self):
     response = requests.get(self.xml_url)
+    response.encoding = 'utf-8' # Convert encoding to get rid of weird characters 
     self.full_xml = response.text
     if response.status_code != 200:
       print("XML url not working: " + self.xml_url)
