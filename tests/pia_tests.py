@@ -38,20 +38,33 @@ class PiaTests(unittest.TestCase):
     pia = PIA("https://gsa.gov/cdnstatic/Ancillary_Financial_Applications_AFA_PIA.pdf")
     with patch('requests.get') as mock_get:
       # return fixture data
-      fixture_content = open('tests/fixtures/fixture.pdf', "rb").read()
+      with open('tests/fixtures/fixture.pdf', "rb") as f:
+        fixture_content = f.read()
       mock_get.return_value.content = fixture_content
       pia.download_pdf()
 
       self.assertEqual(pia.pdf_path, 'pias/Ancillary_Financial_Applications_AFA_PIA.pdf')
 
-  def test_get_full_text(self):
-    pia = PIA("fakeurl")
-    pia.pdf_path = "tests/fixtures/fixture.pdf"
+  def get_text_from_pdf(self):
+    pia = PIA(pdf_path = "tests/fixtures/fixture.pdf")
 
-    pia.get_full_text()
-    print(pia.full_text)
-
+    pia.get_text_from_pdf()
+    self.assertEqual(pia.txt_path, "tests/fixtures/fixture.txt")
     self.assertTrue("Privacy Impact Assessment (PIA)" in pia.full_text)
+
+  def test_get_system_name(self):
+    pia = PIA(txt_path = "tests/fixtures/fixture.txt")
+    pia.get_text_from_txt()
+
+    pia.get_system_name()
+    self.assertTrue("Ancillary Financial Applications" in pia.system_name)
+
+  def test_get_authority(self):
+    pia = PIA(txt_path = "tests/fixtures/fixture.txt")
+    pia.get_text_from_txt()
+
+    pia.get_authority()
+    self.assertTrue("8 CFR 1232.7002" in pia.authority)
 
 if __name__ == '__main__':
     unittest.main()

@@ -29,9 +29,9 @@ class Agency:
   def write_all_to_csv(self):
     with open("gsa_sorns.csv", "w") as csvfile:
       writer = csv.writer(csvfile)
-      writer.writerow(['System Name', 'URL', 'PII', 'Purpose', 'Retention Policy', 'Routine Uses', 'Document Title'])
+      writer.writerow(['System Name', 'URL', 'Authority'])
       for sorn in self.sorns:
-        writer.writerow([sorn.system_name, sorn.html_url, sorn.pii, sorn.purpose, sorn.retention, sorn.routine_uses, sorn.doc_title])
+        writer.writerow([sorn.system_name, sorn.html_url, sorn.authority])
 
 class Sorn:
   def __init__(self, html_url):
@@ -44,6 +44,7 @@ class Sorn:
     self.retention = None
     self.routine_uses = None
     self.doc_title = None
+    self.authority = None
     
   def build_xml_url(self):
     '''
@@ -60,6 +61,7 @@ class Sorn:
 
   def get_full_xml(self):
     response = requests.get(self.xml_url)
+    response.encoding = 'utf-8' # Convert encoding to get rid of weird characters 
     self.full_xml = response.text
     if response.status_code != 200:
       print("XML url not working: " + self.xml_url)
@@ -108,11 +110,12 @@ class Sorn:
   def get_all_data(self):
     self.get_full_xml()
     self.get_system_name()
-    self.get_pii()
-    self.get_purpose()
-    self.get_retention()
-    self.get_routine_uses()
-    self.get_doc_title()
+    # self.get_pii()
+    # self.get_purpose()
+    # self.get_retention()
+    # self.get_routine_uses()
+    # self.get_doc_title()
+    self.get_authority()
     # self.write_to_csv()
 
   def get_system_name(self):
@@ -130,6 +133,14 @@ class Sorn:
   def get_routine_uses(self):
     header = "ROUTINE USES OF RECORDS MAINTAINED IN THE SYSTEM INCLUDING CATEGORIES OF USERS AND THE PURPOSES OF SUCH USES:"
     self.get_sorn_text_after_a_given_heading(header, "routine_uses")
+
+  def get_authority(self):
+    header = "AUTHORITIES FOR MAINTENANCE OF THE SYSTEM:"
+    self.get_sorn_text_after_a_given_heading(header, "authority")
+    if not self.authority:
+      header = "AUTHORITY FOR MAINTENANCE OF THE SYSTEM:"
+      self.get_sorn_text_after_a_given_heading(header, "authority")
+
 
   def get_doc_title(self):
     self.get_first_child("PRIACT", "doc_title")
